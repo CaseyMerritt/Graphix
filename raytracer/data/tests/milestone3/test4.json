@@ -1,0 +1,20 @@
+{
+   "scene":{"type": "union",
+            "children": 
+           [{ 
+             "type": "sphere",
+             "radius": 1,
+             "center": {"x": 0, "y": 7, "z": 0},
+             "material": {"ka": 0.1, "kd": 0.75, "ks": 1.2, "alpha": 15, "color": {"r": 255}}
+             },
+             { 
+             "type": "sphere",
+             "radius": 0.25,
+             "center": {"x": 0.5, "y": 2, "z": 0.1},
+             "material": {"ka": 0.3, "kd": 0.5, "ks": 0.5, "alpha": 2, "color": {"g": 255}}
+             }]},
+   "reflections": 0,
+   "lighting": {"type": "phong", "ambient": {"color": 64}, "shadows": false,
+                "lights": [{"position": {"x": -3, "y": -2, "z": -5}, "color": {"gray": 64}},
+                           {"position": {"x": 0.5, "y": -3, "z": 0.2}, "color": {"gray": 128}}]}
+}

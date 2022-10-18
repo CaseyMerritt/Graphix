@@ -1,0 +1,16 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "hyperboloidone",
+               "material": {"ka": 0.1, "kd": 0.9, "ks": 0.5, "alpha": 100, "color": {"r": 255, "b": 100}}
+              },
+              {"type": "sphere",
+               "radius": 4,
+               "material": {"color": {"r": 255, "g": 100}}
+             }]
+            },
+   "camera": {"x": 0, "y": -8, "z": 0},
+   "lighting": {"type": "phong", "lights": [{"position": {"x": 20, "y": -10, "z": 15}, "color": {"gray": 128}}]}
+}

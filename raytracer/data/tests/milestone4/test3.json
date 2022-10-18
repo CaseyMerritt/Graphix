@@ -1,0 +1,18 @@
+{
+   "scene": {
+             "type": "union",
+             "children": [
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 350, "z": 0},
+                "material": {"type": "textured", "ka": 0.2, "kd": 0.4, "ks": 0.7, "alpha": 100, "texture": "earth.jpg"}},
+               {"type": "sphere",
+                "radius": 15,
+                "center": {"x": -55, "y": 100, "z": 40},
+                "material": {"type": "textured", "ka": 0.2, "kd": 0.8, "ks": 0.3, "alpha": 1, "texture": "deathstar.png"}} 
+                ]},
+   "lighting": {"type": "phong", "ambient": {"color": 128}, "shadows": true,
+                "lights": [{"position": {"x": -50, "y": -700, "z": 30}, "color": {"r": 255, "g": 0, "b": 0}},
+                           {"position": {"x": 50, "y": -700, "z": 30}, "color": {"r": 0, "g": 255, "b": 0}},
+                           {"position": {"x": 0, "y": -700, "z": -60}, "color": {"r": 0, "g": 0, "b": 255}}]}
+}

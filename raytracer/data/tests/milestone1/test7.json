@@ -1,0 +1,23 @@
+{
+   "scene": {
+             "type": "union",
+             "children": [
+              {
+               "type": "sphere",
+               "radius": 1.5,
+               "center": {"x": -0.8, "y": 7, "z": 0},
+               "material": {"ka": 0.5, "kd": 0.3, "ks": 0.2, "alpha": 3, "color": {"r": 255, "b": 100}}
+              },
+              {"type": "plane",
+               "center": {"x": 1, "y": 5, "z": -2},
+               "normal": {"x": 0.71, "y": -0.8, "z": 1},
+               "material": {"ka": 0.5, "kd": 0.3, "ks": 0.2, "alpha": 3, "color": {"r": 255, "g": 100}}
+             }]
+            },
+   "camera": {"x": 0, "y": 0, "z": 0},
+   "view": {"x": 0, "y": 1, "z": 0},
+   "background": {"gray": 128},
+   "fov": 90,
+   "reflections": 0,
+   "lighting": {"type": "basic", "lights": [{"position": {"x": -3, "y": -2, "z": 5}, "color": {"gray": 128}}]}
+}

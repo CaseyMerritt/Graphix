@@ -1,0 +1,140 @@
+
+{
+   "scene": { "type": "difference",
+              "a": {"type": "sphere",
+                "center": {"x": 0, "y": 200, "z": 0},
+                "radius": 125,
+                "material": {"ka": 0.4, "kd": 0.7, "ks": 0, "reflectiveness": 0, "color": {"color": 255}}},
+              "b": {"type": "union",
+                    "children": [
+{"type": "sphere",
+ "radius": 12,
+ "center": {"x": 59.04, "y": 96.69, "z": -33.32},
+ "material": {"ka": 0.14, "kd": 0.72, "ks": 0.28, "alpha": 8, "color": {"r": 134, "g": 109, "b": 185}}}
+,
+{"type": "sphere",
+ "radius": 5,
+ "center": {"x": 22.82, "y": 91.78, "z": -57.95},
+ "material": {"ka": 0.01, "kd": 0.63, "ks": 0.42, "alpha": 4, "color": {"r": 181, "g": 48, "b": 137}}}
+,
+{"type": "sphere",
+ "radius": 4,
+ "center": {"x": -66.85, "y": 99.28, "z": -30.66},
+ "material": {"ka": 0.28, "kd": 0.91, "ks": 0.02, "alpha": 6, "color": {"r": 24, "g": 2, "b": 242}}}
+,
+{"type": "sphere",
+ "radius": 5,
+ "center": {"x": 32.86, "y": 94.09, "z": 55.72},
+ "material": {"ka": 0.22, "kd": 0.66, "ks": 0.38, "alpha": 5, "color": {"r": 103, "g": 95, "b": 77}}}
+,
+{"type": "sphere",
+ "radius": 3,
+ "center": {"x": -16.54, "y": 78.91, "z": 22.50},
+ "material": {"ka": 0.14, "kd": 0.67, "ks": 0.13, "alpha": 7, "color": {"r": 158, "g": 112, "b": 53}}}
+,
+{"type": "sphere",
+ "radius": 11,
+ "center": {"x": -70.24, "y": 98.14, "z": 4.36},
+ "material": {"ka": 0.13, "kd": 0.87, "ks": 0.10, "alpha": 5, "color": {"r": 49, "g": 103, "b": 67}}}
+,
+{"type": "sphere",
+ "radius": 11,
+ "center": {"x": -39.78, "y": 87.31, "z": 32.25},
+ "material": {"ka": 0.14, "kd": 0.90, "ks": 0.03, "alpha": 11, "color": {"r": 198, "g": 125, "b": 145}}}
+,
+{"type": "sphere",
+ "radius": 10,
+ "center": {"x": -42.61, "y": 83.45, "z": 14.45},
+ "material": {"ka": 0.14, "kd": 0.70, "ks": 0.35, "alpha": 13, "color": {"r": 196, "g": 37, "b": 246}}}
+,
+{"type": "sphere",
+ "radius": 5,
+ "center": {"x": -48.43, "y": 94.33, "z": -44.91},
+ "material": {"ka": 0.08, "kd": 0.82, "ks": 0.06, "alpha": 10, "color": {"r": 98, "g": 49, "b": 136}}}
+,
+{"type": "sphere",
+ "radius": 11,
+ "center": {"x": -59.95, "y": 90.95, "z": 6.20},
+ "material": {"ka": 0.01, "kd": 0.70, "ks": 0.17, "alpha": 0.43, "color": {"r": 133, "g": 65, "b": 180}}}
+,
+{"type": "sphere",
+ "radius": 8,
+ "center": {"x": 29.14, "y": 103.03, "z": -74.65},
+ "material": {"ka": 0.10, "kd": 0.63, "ks": 0.21, "alpha": 14, "color": {"r": 148, "g": 140, "b": 38}}}
+,
+{"type": "sphere",
+ "radius": 8,
+ "center": {"x": -5.89, "y": 77.64, "z": 14.50},
+ "material": {"ka": 0.26, "kd": 0.80, "ks": 0.19, "alpha": 7, "color": {"r": 103, "g": 150, "b": 146}}}
+,
+{"type": "sphere",
+ "radius": 12,
+ "center": {"x": 42.73, "y": 91.18, "z": -38.35},
+ "material": {"ka": 0.23, "kd": 0.66, "ks": 0.40, "alpha": 11, "color": {"r": 75, "g": 100, "b": 77}}}
+,
+{"type": "sphere",
+ "radius": 12,
+ "center": {"x": -1.62, "y": 95.20, "z": -65.39},
+ "material": {"ka": 0.25, "kd": 0.81, "ks": 0.01, "alpha": 4, "color": {"r": 225, "g": 115, "b": 25}}}
+,
+{"type": "sphere",
+ "radius": 11,
+ "center": {"x": -23.00, "y": 82.02, "z": -30.19},
+ "material": {"ka": 0.11, "kd": 0.69, "ks": 0.31, "alpha": 8, "color": {"r": 201, "g": 29, "b": 70}}}
+,
+{"type": "sphere",
+ "radius": 3,
+ "center": {"x": 12.63, "y": 102.44, "z": -77.01},
+ "material": {"ka": 0.17, "kd": 0.78, "ks": 0.47, "alpha": 3, "color": {"r": 19, "g": 44, "b": 233}}}
+,
+{"type": "sphere",
+ "radius": 6,
+ "center": {"x": 59.09, "y": 106.16, "z": -55.67},
+ "material": {"ka": 0.16, "kd": 0.82, "ks": 0.28, "alpha": 0.74, "color": {"r": 240, "g": 144, "b": 104}}}
+,
+{"type": "sphere",
+ "radius": 6,
+ "center": {"x": -44.91, "y": 87.01, "z": -27.85},
+ "material": {"ka": 0.17, "kd": 0.71, "ks": 0.18, "alpha": 9, "color": {"r": 89, "g": 76, "b": 140}}}
+,
+{"type": "sphere",
+ "radius": 11,
+ "center": {"x": 52.54, "y": 108.11, "z": 64.88},
+ "material": {"ka": 0.15, "kd": 0.50, "ks": 0.06, "alpha": 14, "color": {"r": 187, "g": 192, "b": 146}}}
+,
+{"type": "sphere",
+ "radius": 8,
+ "center": {"x": -67.51, "y": 100.34, "z": 26.95},
+ "material": {"ka": 0.10, "kd": 0.64, "ks": 0.19, "alpha": 0.26, "color": {"r": 192, "g": 215, "b": 191}}}
+,
+{"type": "sphere",
+ "radius": 6,
+ "center": {"x": -23.83, "y": 100.93, "z": 71.48},
+ "material": {"ka": 0.24, "kd": 0.61, "ks": 0.21, "alpha": 3, "color": {"r": 92, "g": 27, "b": 163}}}
+,
+{"type": "sphere",
+ "radius": 10,
+ "center": {"x": -8.00, "y": 84.49, "z": 45.90},
+ "material": {"ka": 0.18, "kd": 0.66, "ks": 0.33, "alpha": 13, "color": {"r": 102, "g": 145, "b": 14}}}
+,
+{"type": "sphere",
+ "radius": 7,
+ "center": {"x": -22.80, "y": 90.42, "z": 52.90},
+ "material": {"ka": 0.13, "kd": 0.66, "ks": 0.49, "alpha": 10, "color": {"r": 208, "g": 168, "b": 243}}}
+,
+{"type": "sphere",
+ "radius": 10,
+ "center": {"x": 42.92, "y": 110.59, "z": 72.29},
+ "material": {"ka": 0.09, "kd": 0.81, "ks": 0.28, "alpha": 2, "color": {"r": 190, "g": 54, "b": 131}}}
+,
+{"type": "sphere",
+ "radius": 8,
+ "center": {"x": 66.03, "y": 94.99, "z": -1.35},
+ "material": {"ka": 0.15, "kd": 0.61, "ks": 0.18, "alpha": 0.17, "color": {"r": 110, "g": 161, "b": 136}}}
+]
+            }},
+   "reflections": 0,
+   "lighting": {"type": "phong", "ambient": {"color": 128}, "shadows": true,
+                "lights": [{"position": {"x": 500, "y": -100, "z": 0}, "color": {"red": 196}},
+                          ]}
+}

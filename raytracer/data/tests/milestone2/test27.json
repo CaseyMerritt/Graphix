@@ -1,0 +1,22 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "hyperboloidtwo",
+               "material": {"color": {"r": 255, "b": 100}}
+              },
+              {"type": "moverotation",
+               "movement": {"x": -1.5},
+               "rotation": {"y": 35},
+               "child":
+                {"type": "hyperboloidone",
+                 "material": {"color": {"r": 255, "g": 100}}
+               }
+              },
+              {"type": "sphere",
+               "radius": 10}]
+            },
+   "camera": {"x": 0, "y": -15, "z": 0},
+   "lighting": {"type": "basic", "lights": [{"position": {"y": -10}, "color": {"gray": 128}}]}
+}

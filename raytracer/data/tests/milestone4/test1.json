@@ -1,0 +1,7 @@
+{
+   "scene": {"type": "sphere",
+                "radius": 165,
+                "center": {"x": 0, "y": 350, "z": 0},
+                "material": {"type": "textured", "texture": "earth.jpg"}
+            }
+}

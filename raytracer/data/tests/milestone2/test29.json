@@ -1,0 +1,16 @@
+{
+   "scene": {
+             "type": "difference",
+             "a": 
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 250, "z": 0},
+                "material": {"ks": 1.2, "color": {"r": 255}}},
+             "b": {"type": "moverotation",
+                   "movement": {"y": 125}, "rotation": {"y": 90, "x": 27},
+                   "child":   
+                {"type": "cylinder",
+                 "radius": 25,
+                 "material": {"color": {"b": 255}}}}
+            }
+}

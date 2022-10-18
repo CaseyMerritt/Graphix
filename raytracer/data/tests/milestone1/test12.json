@@ -1,0 +1,8 @@
+{
+   "scene": {"type": "paraboloid",
+             "material": {"color": {"r": 225}}},
+   "camera": {"x": 0, "y": -15, "z": 2},
+   "view": {"x": 0, "y": 1, "z": 0},
+   "background": {"r": 128, "g": 128, "b": 128},
+   "lighting": {"type": "basic", "lights": [{"position": {"y": -25}, "color": {"gray": 128}}]}
+}

@@ -1,0 +1,26 @@
+{
+   "scene": {"type": "union",
+             "children": [
+                {"type": "plane",
+                 "scale": 2,
+                 "center": {"z": -4},
+                 "normal": {"z": 1},
+                 "material": {"type": "textured", "reflectiveness": 0.6}
+                },
+                {"type": "intersection",
+                 "children": [
+                    {"type": "sphere",
+                     "radius": 2,
+                     "center": {"z": -2, "y": 10},
+                     "material": {"type": "textured", "texture": "earth.jpg"}
+                    },
+                    {"type": "sphere",
+                     "radius": 2.8,
+                     "center": {"x": 1.5, "z": -1, "y": 9},
+                     "material": {"color": {"r": 255}}
+                    }
+                ]}
+            ]},
+   "reflections": 2,
+   "lighting": {"lights": [{"position": {"y": -2, "z": 0}}]}
+}

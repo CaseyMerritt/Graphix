@@ -1,0 +1,25 @@
+{
+   "scene": {"type": "union",
+            "children": [
+            {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "hyperboloidone",
+               "material": {"ka": 0.1, "kd": 0.9, "ks": 0.5, "alpha": 100, "reflectiveness": 0.5, "color": {"r": 255, "b": 100}}
+              },
+              {"type": "sphere",
+               "radius": 4,
+               "material": {"color": {"r": 255}}
+             }]
+            },
+            {"type": "sphere",
+             "radius": 1,
+             "center": {"x": 2, "y": -2.75, "z": 1},
+             "material": {"color": {"b": 255}}
+            }
+            ]},
+   "camera": {"x": 0, "y": -8, "z": 0},
+   "reflections": 1,
+   "lighting": {"type": "phong", "lights": [{"position": {"x": 5, "y": -10}, "color": {"gray": 128}}]}
+}

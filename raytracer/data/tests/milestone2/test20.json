@@ -1,0 +1,11 @@
+{
+   "scene": {
+             "type": "scaling",
+             "scaling": {"x": 2.5},
+             "child": 
+               {"type": "sphere",
+                "radius": 60,
+                "center": {"x": 0, "y": 300, "z": 0},
+                "material": {"color": {"r": 255}}}
+            }
+}

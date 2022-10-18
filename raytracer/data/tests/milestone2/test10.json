@@ -1,0 +1,18 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "plane",
+               "center": {"x": -2, "y": 7, "z": -2},
+               "normal": {"x": -0.71, "y": -0.3, "z": 1},
+               "material": {"ka": 0.5, "kd": 0.3, "ks": 0.2, "alpha": 3, "color": {"r": 255, "b": 100}}
+              },
+              {"type": "plane",
+               "center": {"x": 1, "y": 5, "z": -2},
+               "normal": {"x": 0.71, "y": -0.8, "z": 1},
+               "material": {"ka": 0.5, "kd": 0.3, "ks": 0.2, "alpha": 3, "color": {"r": 255, "g": 100}}
+             }]
+            },
+   "lighting": {"type": "basic", "lights": [{"position": {"x": -3, "y": -2, "z": 5}, "color": {"gray": 128}}]}
+}

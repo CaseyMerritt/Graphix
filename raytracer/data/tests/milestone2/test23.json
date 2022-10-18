@@ -1,0 +1,10 @@
+{
+   "scene": {"type": "moverotation",
+             "rotation": {"z": 45, "y": 25},
+             "movement": {"y": 350, "z": -40},
+             "child": 
+               {"type": "cylinder",
+                "radius": 150,
+                "material": {"color": {"r": 255}}}
+            }
+}

@@ -1,0 +1,24 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children":[
+               {"type": "moverotation",
+                "rotation": {"z": 45, "y": 25},
+                "movement": {"y": 350, "z": -40},
+                "child": {
+                 "type": "scaling",
+                 "scaling": {"x": 2.5},
+                 "child": 
+                   {"type": "sphere",
+                    "radius": 60,
+                    "material": {"color": {"r": 255}}}
+                   }
+               },
+               {"type": "sphere",
+                "radius": 65,
+                "center": {"x": -65, "y": 280, "z": 10},
+                "material": {"color": {"g": 255}}}
+             ]
+            },
+   "lighting": {"type": "basic", "lights": [{"position": {"x": -100}, "color": {"gray": 128}}]}
+}

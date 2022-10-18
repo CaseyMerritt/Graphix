@@ -1,0 +1,19 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {"type": "moverotation",
+                "movement": {"y": 250},
+                "child": {"type": "sphere",
+                          "radius": 135,
+                          "material": {"color": {"r": 255}}}
+              },
+              {"type": "moverotation",
+                "movement": {"x": -40, "y": 225},
+                "child": {"type": "sphere",
+                          "radius": 100,
+                          "material": {"color": {"g": 255}}}
+              }
+             ]
+            }
+}

@@ -1,0 +1,21 @@
+{
+   "scene": {   
+             "type": "union",
+             "children": [
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 350, "z": 0},
+                "material": {"ka": 0.2, "kd": 0.4, "ks": 0.7, "alpha": 100, "reflectiveness": 0.1, "color": {"r": 255}}},
+                {"type": "sphere",
+                "radius": 115,
+                "center": {"x": -190, "y": 425, "z": 30},
+                "material": {"ka": 0.2, "kd": 0.4, "ks": 0.7, "alpha": 100, "reflectiveness": 0.1, "color": {"b": 255}}},
+                {"type": "sphere",
+                   "radius": 35,
+                   "center": {"x": -25, "y": 100, "z": 15},
+                   "material": {"ka": 0.2, "kd": 0.8, "ks": 0, "alpha": 100, "color": {"color": 255}, "transparency": 0.7, "refractionIndex": 1.1}},
+                ]},
+   "reflections": 1,
+   "lighting": {"type": "phong", "ambient": {"color": 128},
+                "lights": [{"position": {"x": 500, "y": -700, "z": -60}, "color": {"color": 255}}]}
+}

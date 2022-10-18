@@ -1,0 +1,38 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 4, "z": -0.5},
+               "normal": {"x": -3, "y": -2, "z": 3},
+               "material": {"color": {"r": 255, "b": 100}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 4, "z": -0.5},
+               "normal": {"x": 3, "y": -2, "z": 3},
+               "material": {"color": {"b": 255}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 8, "z": -0.5},
+               "normal": {"x": 0, "y": 2, "z": 3},
+               "material": {"color": {"b": 255}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 0, "z": -0.5},
+               "normal": {"z": 1},
+               "material": {"color": {"g": 255}}
+              },
+              {"type": "plane",
+               "center": {"z": -1.75},
+               "normal": {"z": -1},
+               "material": {"color": {"r": 255}}
+             }]
+            },
+   "lighting": {"type": "basic", "lights": [{"position": {"x": -3, "y": -2, "z": 5}, "color": {"gray": 128}}]},
+   "camera": {"x": 5, "y": 0, "z": 4},
+   "view": {"x": -1, "y": 1, "z": -1}
+}

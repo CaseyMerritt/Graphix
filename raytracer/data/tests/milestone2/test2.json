@@ -1,0 +1,15 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 250, "z": 0},
+                "material": {"color": {"r": 255}}},
+               {"type": "sphere",
+                "radius": 20,
+                "center": {"x": -60, "y": 140, "z": 0},
+                "material": {"color": {"g": 255}}}
+                ]
+            }
+}

@@ -1,0 +1,17 @@
+{
+   "scene": {
+             "type": "difference",
+             "a": 
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 250, "z": 0},
+                "material": {"ks": 1.2, "color": {"r": 255}}},
+             "b": {"type": "moverotation",
+                   "movement": {"y": 125}, "rotation": {"y": 90, "x": 27},
+                   "child":   
+                {"type": "cylinder",
+                 "radius": 25,
+                 "material": {"ka": 0.1, "kd": 0.6, "ks": 1.2, "alpha": 200, "color": {"b": 255}}}}
+            },
+    "lighting": {"type": "phong", "shadows": true, "lights": [{"position": {"x": -15, "y": 120, "z": 80}, "color": {"gray": 128}}]}
+}

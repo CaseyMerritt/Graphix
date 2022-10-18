@@ -1,0 +1,25 @@
+{
+   "scene": {
+   
+             "type": "union",
+             "children": [
+               {"type": "sphere",
+                "radius": 135,
+                "center": {"x": 0, "y": 350, "z": 0},
+                "material": {"type": "textured", "ka": 0.2, "kd": 0.4, "ks": 0.7, "alpha": 100, "reflectiveness": 0.1, "texture": "earth.jpg"}},
+               { "type": "intersection",
+               
+                 "children": [{"type": "sphere",
+                               "radius": 35,
+                               "center": {"x": -15, "y": 100, "z": 25},
+                               "material": {"ka": 0.2, "kd": 0.8, "ks": 0, "alpha": 100, "texture": "deathstar.png", "color": {"color": 255}, "transparency": 0.99, "refractionIndex": 1.33}},
+                              {"type": "sphere",
+                               "radius": 35,
+                               "center": {"x": -20, "y": 60, "z": 12},
+                               "material": {"ka": 0.2, "kd": 0.8, "ks": 0, "alpha": 100, "texture": "deathstar.png", "color": {"color": 255}, "transparency": 0.99, "refractionIndex": 1.33}}]} 
+                ]},
+   "lighting": {"type": "phong", "ambient": {"color": 128},
+                "lights": [{"position": {"x": -50, "y": -700, "z": 30}, "color": {"r": 255, "g": 0, "b": 0}},
+                           {"position": {"x": 50, "y": -700, "z": 30}, "color": {"r": 0, "g": 255, "b": 0}},
+                           {"position": {"x": 0, "y": -700, "z": -60}, "color": {"r": 0, "g": 0, "b": 255}}]}
+}

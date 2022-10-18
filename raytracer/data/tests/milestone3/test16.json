@@ -1,0 +1,12 @@
+{
+   "scene": {
+             "type": "scaling",
+             "scaling": {"x": 2.5},
+             "child": 
+               {"type": "sphere",
+                "radius": 60,
+                "center": {"x": 0, "y": 300, "z": 0},
+                "material": {"ka": 0.1, "kd": 0.9, "ks": 0.5, "alpha": 100, "color": {"r": 255}}}
+            },
+   "lighting": {"type": "phong", "shadows": false, "ambient": {"color": 128}, "lights": [{"position": {"x": 400, "y": -20, "z": 10}, "color": {"gray": 196}}]}
+}

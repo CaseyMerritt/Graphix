@@ -1,0 +1,18 @@
+{
+   "scene": {"type": "union",
+             "children": [
+                {"type": "plane",
+                 "scale": 2,
+                 "center": {"z": -4},
+                 "normal": {"z": 1},
+                 "material": {"type": "textured", "reflectiveness": 0.6}
+                },
+                {"type": "sphere",
+                 "radius": 2,
+                 "center": {"z": -2, "y": 10},
+                 "material": {"type": "textured", "texture": "earth.jpg"}
+                }
+            ]},
+   "reflections": 2,
+   "lighting": {"lights": [{"position": {"y": -2, "z": 0}}]}
+}

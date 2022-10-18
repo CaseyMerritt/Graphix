@@ -1,0 +1,36 @@
+{
+   "scene": {
+             "type": "intersection",
+             "children": [
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 4, "z": -0.5},
+               "normal": {"x": -3, "y": -2, "z": 3},
+               "material": {"color": {"r": 255, "b": 100}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 4, "z": -0.5},
+               "normal": {"x": 3, "y": -2, "z": 3},
+               "material": {"ka": 0.1, "kd": 0.9, "ks": 0.5, "alpha": 100, "color": {"b": 255}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 8, "z": -0.5},
+               "normal": {"x": 0, "y": 2, "z": 3},
+               "material": {"color": {"b": 255}}
+              },
+              {
+               "type": "plane",
+               "center": {"x": 0, "y": 0, "z": -0.5},
+               "normal": {"z": 1},
+               "material": {"ka": 0.4, "kd": 0.5, "ks": 0.4, "alpha": 10, "color": {"g": 255}}
+              },
+              {"type": "plane",
+               "center": {"z": -1.75},
+               "normal": {"z": -1},
+               "material": {"ka": 0.6, "kd": 0.5, "ks": 0.2, "alpha": 10, "color": {"r": 255}}
+             }]
+            },
+   "lighting": {"type": "phong", "shadows": false, "ambient": {"color": 96}, "lights": [{"position": {"x": 220, "y": 250, "z": 50}, "color": {"gray": 196}}]}
+}

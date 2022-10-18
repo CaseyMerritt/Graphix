@@ -1,0 +1,11 @@
+{
+   "scene": {"type": "sphere",
+                "radius": 165,
+                "center": {"x": 0, "y": 350, "z": 0},
+                "material": {"type": "textured", "ka": 0.2, "kd": 0.4, "ks": 0.7, "alpha": 100, "texture": "earth.jpg"}
+            },
+   "lighting": {"type": "phong", "ambient": {"color": 128}, 
+                "lights": [{"position": {"x": -50, "y": -700, "z": 30}, "color": {"r": 255, "g": 0, "b": 0}},
+                           {"position": {"x": 50, "y": -700, "z": 30}, "color": {"r": 0, "g": 255, "b": 0}},
+                           {"position": {"x": 0, "y": -700, "z": -60}, "color": {"r": 0, "g": 0, "b": 255}}]}
+}

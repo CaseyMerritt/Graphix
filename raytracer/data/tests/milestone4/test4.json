@@ -1,0 +1,9 @@
+{
+   "scene": {"type": "plane",
+             "scale": 10,
+             "center": {"z": -4},
+             "normal": {"y": -1, "z": 1},
+             "material": {"type": "textured"}
+            },
+   "lighting": {"lights": [{"position": {"z": 8}}]}
+}

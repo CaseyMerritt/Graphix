@@ -1,0 +1,13 @@
+{
+   "scene": {"type": "triangle",
+                "v1": {"x": -100, "y": 200, "z": -100},
+                "v2": {"x": 100, "y": 200, "z": -100},
+                "v3": {"x": 100, "y": 200, "z": 100},
+                "material": {"color": {"r": 225}}},
+   "camera": {"x": 0, "y": 0, "z": 0},
+   "view": {"x": 0, "y": 1, "z": 0},
+   "background": {"gray": 128},
+   "fov": 90,
+   "reflections": 0,
+   "lighting": {"type": "basic", "lights": [{"position": {"x": -3, "y": -2, "z": 5}, "color": {"gray": 128}}]}
+}
