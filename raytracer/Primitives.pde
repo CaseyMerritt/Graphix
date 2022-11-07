@@ -3,7 +3,6 @@ class Sphere implements SceneObject
     PVector center;
     float radius;
     Material material;
-    
     Sphere(PVector center, float radius, Material material)
     {
        this.center = center;
@@ -11,73 +10,44 @@ class Sphere implements SceneObject
        this.material = material;
        
        // remove this line when you implement spheres
-       throw new NotImplementedException("Spheres not implemented yet");
+       //throw new NotImplementedException("Spheres not implemented yet");
     }
     
     ArrayList<RayHit> intersect(Ray r)
     {
         ArrayList<RayHit> result = new ArrayList<RayHit>();
+        
+        float tp = PVector.sub(center, r.origin).dot(r.direction);
+        PVector p = PVector.mult(r.direction, tp).add(r.origin).sub(center);
+        double x = p.mag();
+        
+        if(x <= radius){
+          double impactPoint1 = tp + Math.sqrt((radius * radius) - (x * x));
+          double impactPoint2 = tp - Math.sqrt((radius * radius) - (x * x));
+          
+          RayHit rh1 = new RayHit();
+          rh1.t = (float) impactPoint1;
+          rh1.location = PVector.add(r.direction, r.origin).mult(rh1.t);
+          rh1.normal = PVector.sub(rh1.location, center).normalize();
+          RayHit rh2 = new RayHit();
+          rh2.t = (float) impactPoint2;
+          rh2.location = PVector.add(r.direction, r.origin).mult(rh2.t);
+          rh2.normal = PVector.sub(rh2.location, center).normalize();
+          rh2.material = material;
+          rh1.material = material;
+          
+          if(rh1.t > 0 && rh2.t > 0){
+             rh2.entry = true;
+             rh1.entry = false;
+             result.add(rh2);
+             result.add(rh1);
+            
+          }
+        }
+          
+        
+        //System.out.print(p + " ");
         // TODO: Step 2: implement ray-sphere intersections
-        return result;
-    }
-}
-
-class Plane implements SceneObject
-{
-    PVector center;
-    PVector normal;
-    float scale;
-    Material material;
-    PVector left;
-    PVector up;
-    
-    Plane(PVector center, PVector normal, Material material, float scale)
-    {
-       this.center = center;
-       this.normal = normal.normalize();
-       this.material = material;
-       this.scale = scale;
-       
-       // remove this line when you implement planes
-       throw new NotImplementedException("Planes not implemented yet");
-    }
-    
-    ArrayList<RayHit> intersect(Ray r)
-    {
-        ArrayList<RayHit> result = new ArrayList<RayHit>();
-        return result;
-    }
-}
-
-class Triangle implements SceneObject
-{
-    PVector v1;
-    PVector v2;
-    PVector v3;
-    PVector normal;
-    PVector tex1;
-    PVector tex2;
-    PVector tex3;
-    Material material;
-    
-    Triangle(PVector v1, PVector v2, PVector v3, PVector tex1, PVector tex2, PVector tex3, Material material)
-    {
-       this.v1 = v1;
-       this.v2 = v2;
-       this.v3 = v3;
-       this.tex1 = tex1;
-       this.tex2 = tex2;
-       this.tex3 = tex3;
-       this.normal = PVector.sub(v2, v1).cross(PVector.sub(v3, v1)).normalize();
-       this.material = material;
-       
-       // remove this line when you implement triangles
-       throw new NotImplementedException("Triangles not implemented yet");
-    }
-    
-    ArrayList<RayHit> intersect(Ray r)
-    {
-        ArrayList<RayHit> result = new ArrayList<RayHit>();
         return result;
     }
 }
@@ -114,6 +84,115 @@ class Cylinder implements SceneObject
         return result;
     }
 }
+
+class Plane implements SceneObject
+{
+    PVector center;
+    PVector normal;
+    float scale;
+    Material material;
+    PVector left;
+    PVector up;
+    
+    Plane(PVector center, PVector normal, Material material, float scale)
+    {
+       this.center = center;
+       this.normal = normal.normalize();
+       this.material = material;
+       this.scale = scale;
+       
+       // remove this line when you implement planes
+       //throw new NotImplementedException("Planes not implemented yet");
+    }
+    
+    ArrayList<RayHit> intersect(Ray r)
+    {
+        ArrayList<RayHit> result = new ArrayList<RayHit>();
+        
+        float t = ((PVector.sub(center,r.origin)).dot(normal))/(PVector.dot(r.direction,normal));
+        if(t > 0){
+          RayHit rh1 = new RayHit();
+          rh1.t = t;
+          rh1.location = PVector.mult(r.direction,rh1.t).add(r.origin);
+          rh1.normal = normal;
+          rh1.material = material;
+          rh1.entry = true;
+          result.add(rh1);
+        }
+        return result;
+    }
+}
+
+class Triangle implements SceneObject
+{
+    PVector v1;
+    PVector v2;
+    PVector v3;
+    PVector normal;
+    PVector tex1;
+    PVector tex2;
+    PVector tex3;
+    Material material;
+    
+    Triangle(PVector v1, PVector v2, PVector v3, PVector tex1, PVector tex2, PVector tex3, Material material)
+    {
+       this.v1 = v1;
+       this.v2 = v2;
+       this.v3 = v3;
+       this.tex1 = tex1;
+       this.tex2 = tex2;
+       this.tex3 = tex3;
+       this.normal = PVector.sub(v2, v1).cross(PVector.sub(v3, v1)).normalize();
+       this.material = material;
+       
+       // remove this line when you implement triangles
+       //throw new NotImplementedException("Triangles not implemented yet");
+    }
+    
+    ArrayList<RayHit> intersect(Ray r)
+    {
+        ArrayList<RayHit> result = new ArrayList<RayHit>();
+        
+        
+        float t = ((PVector.sub(v1,r.origin)).dot(normal))/(PVector.dot(r.direction,normal));
+        PVector point = PVector.mult(r.direction,t).add(r.origin);
+        if(t > 0){
+          if(PointInTriangle(v1,v2,v3,point)){
+            //float[] uv = computeUV(v1,v2,v3,r.direction);
+            RayHit rh1 = new RayHit();
+            rh1.t = t;
+            rh1.location = PVector.mult(r.direction,rh1.t).add(r.origin);
+            rh1.normal = normal;
+            rh1.material = material;
+            rh1.entry = true;
+            result.add(rh1);
+            //print("u: " + uv[0] + " v: " + uv[1] + " | ");
+          } else {
+            //print(u + " " + v + "***");
+          }
+        }
+       
+       
+        return result;
+       
+    }
+    float[] computeUV(PVector a,PVector b,PVector c,PVector p){
+      PVector e = PVector.sub(c,b);
+      PVector g = PVector.sub(a,b);
+      PVector d = PVector.sub(p,b);
+      float denom = (PVector.dot(e,e) * PVector.dot(g,g)) - (PVector.dot(e,g) * PVector.dot(g,e));
+       
+      float[] uv = new float[2];
+      uv[0] = ((PVector.dot(g,g) * PVector.dot(d,e)) - (PVector.dot(e,g) * PVector.dot(d,g)))/denom;
+      uv[1] = ((PVector.dot(e,e) * PVector.dot(d,g)) - (PVector.dot(e,g) * PVector.dot(d,e)))/denom;
+      return uv;
+    }
+    boolean PointInTriangle(PVector a,PVector b,PVector c,PVector p){
+      float[] uv = computeUV(a,b,c,p);
+      return ((uv[0] >= 0) && (uv[1] >= 0) && uv[0]+ uv[1] <= 1);
+    }
+}
+
 
 class Cone implements SceneObject
 {

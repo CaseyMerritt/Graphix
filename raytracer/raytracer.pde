@@ -1,4 +1,4 @@
-String input =  "data/tests/milestone1/empty.json";
+String input =  "data/tests/milestone1/test1.json";
 String output = "data/tests/milestone1/test1.png";
 int repeat = 0;
 
@@ -136,36 +136,62 @@ class RayTracer
     
     color getColor(int x, int y)
     {
-      float w = width;
-      float h = height;
-      
-      float u = x*1.0/w - 0.5;
-      float v = -1 * (y*1.0/h - 0.5);
-      
       PVector origin = scene.camera;
       PVector direction;
       
-      if(u > 0 && v > 0){
-        direction = new PVector(u * w, w/2, v*h);//incorrect
-      }else if(u < 0 && v > 0){
-        direction = new PVector(u * w, w/2, v*h);//incorrect
-      }else if(u > 0 && v < 0){
-         direction = new PVector(u * w, w/2, v*h);
-      }else if(u < 0 && v < 0){
-        direction = new PVector(u * w, w/2, v*h);//incorrect
-      }else{
-        direction = new PVector(0, w/2, 0);//origin
-      }
+      float w = width;
+      float h = height;
       
+      
+      float u = x*1.0/w - 0.5;
+      float v = -(y*1.0/h - 0.5);
+      direction = new PVector(u*w,w/2,v*h).normalize();
       Ray ray = new Ray(origin, direction);
       
       ArrayList<RayHit> hits = scene.root.intersect(ray);
-      if(hits.size() > 0){
-        return scene.lighting.getColor(hits.get(0), scene, ray.origin);
-      }
       
-      return scene.background;
-      // remove this line when you implement basic raytracing
+      if(hits.size()>0){
+        RayHit hit = hits.get(0);
+        if(hit.material.properties.reflectiveness == 0){
+          
+          return scene.lighting.getColor(hit, scene, ray.origin);
+          
+        }else if(hit.material.properties.reflectiveness == 1){
+          
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, PVector.mult(ray.origin, -1))).sub(PVector.mult(ray.origin, -1)).normalize();
+          
+          PVector impact = new PVector(hit.normal.x + EPS, hit.normal.y + EPS);
+          
+          Ray reflection = new Ray(impact, Rm);
+          ArrayList<RayHit> reflectionHits = scene.root.intersect(reflection);
+          
+          if(reflectionHits.size() > 0){
+            color R = scene.lighting.getColor(reflectionHits.get(0), scene, Rm);
+          
+            return R;
+          }else{
+            return scene.background;
+          }    
+        }else{
+          
+          color surface = scene.lighting.getColor(hits.get(0), scene, ray.origin);
+          
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, PVector.mult(ray.origin, -1))).sub(PVector.mult(ray.origin, -1)).normalize();
+          
+          PVector impact = new PVector(hit.normal.x + EPS, hit.normal.y + EPS);
+          
+          Ray reflection = new Ray(impact, Rm);
+          ArrayList<RayHit> reflectionHits = scene.root.intersect(reflection);
+          
+          if(reflectionHits.size() > 0){
+            color R = scene.lighting.getColor(reflectionHits.get(0), scene, Rm);
+          
+            return lerpColor(surface, R, hits.get(0).material.properties.reflectiveness);
+          }else{
+            return lerpColor(surface, scene.background, hits.get(0).material.properties.reflectiveness);
+          }  
+        }
+      }
       //throw new NotImplementedException("Basic raytracing not implemented yet");
       
       /*if (scene.reflections > 0)
@@ -175,6 +201,6 @@ class RayTracer
       }*/
       
       /// this will be the fallback case
-      //return this.scene.background;
+      return this.scene.background;
     }
 }
