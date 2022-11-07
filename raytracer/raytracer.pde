@@ -152,11 +152,27 @@ class RayTracer
       
       if(hits.size()>0){
         RayHit hit = hits.get(0);
-        if(hit.material.properties.reflectiveness == 0){
+        if (scene.reflections > 0){
+          
+          color acc = color(0,0,0);
+          acc = reflection(0, acc, hit, ray);
+          return acc;
+          
+          //throw new NotImplementedException("Reflection not implemented yet");
+        }else{
+          return scene.lighting.getColor(hit, scene, ray.origin);
+        }
+      }
+      
+      return this.scene.background;
+    }
+    
+    color reflection(int i, color accumulator, RayHit hit, Ray ray){      
+      if(hit.material.properties.reflectiveness == 0){
           
           return scene.lighting.getColor(hit, scene, ray.origin);
           
-        }else if(hit.material.properties.reflectiveness == 1){
+       }else if(hit.material.properties.reflectiveness == 1){
           
           PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, PVector.mult(ray.origin, -1))).sub(PVector.mult(ray.origin, -1)).normalize();
           
@@ -173,34 +189,10 @@ class RayTracer
             return scene.background;
           }    
         }else{
-          
-          color surface = scene.lighting.getColor(hits.get(0), scene, ray.origin);
-          
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, PVector.mult(ray.origin, -1))).sub(PVector.mult(ray.origin, -1)).normalize();
-          
-          PVector impact = new PVector(hit.normal.x + EPS, hit.normal.y + EPS);
-          
-          Ray reflection = new Ray(impact, Rm);
-          ArrayList<RayHit> reflectionHits = scene.root.intersect(reflection);
-          
-          if(reflectionHits.size() > 0){
-            color R = scene.lighting.getColor(reflectionHits.get(0), scene, Rm);
-          
-            return lerpColor(surface, R, hits.get(0).material.properties.reflectiveness);
-          }else{
-            return lerpColor(surface, scene.background, hits.get(0).material.properties.reflectiveness);
-          }  
+          //shit fuck bitch
+          //lerp between the colors
         }
-      }
-      //throw new NotImplementedException("Basic raytracing not implemented yet");
-      
-      /*if (scene.reflections > 0)
-      {
-          // remove this line when you implement reflection
-          throw new NotImplementedException("Reflection not implemented yet");
-      }*/
-      
-      /// this will be the fallback case
-      return this.scene.background;
+        
+        return accumulator;
     }
 }
