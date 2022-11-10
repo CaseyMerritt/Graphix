@@ -146,53 +146,154 @@ class RayTracer
       float u = x*1.0/w - 0.5;
       float v = -(y*1.0/h - 0.5);
       direction = new PVector(u*w,w/2,v*h).normalize();
-      Ray ray = new Ray(origin, direction);
       
+      Ray ray = new Ray(origin, direction);
       ArrayList<RayHit> hits = scene.root.intersect(ray);
       
       if(hits.size()>0){
+        
         RayHit hit = hits.get(0);
+        
+        /*
+          only calculate relfections if scene calls for it
+        */
         if (scene.reflections > 0){
           
-          color acc = color(0,0,0);
-          acc = reflection(0, acc, hit, ray);
-          return acc;
+          //send first hit and ray used to get that hit to the calculator
+          color col = color(0,0,0);
+          col = calculateReflections(scene, hit, ray, col, 0);
+          return col;
           
-          //throw new NotImplementedException("Reflection not implemented yet");
+          /*
+            Only use lighting model if no reflections are set
+          */
         }else{
+          
           return scene.lighting.getColor(hit, scene, ray.origin);
+          
         }
+        
       }
       
       return this.scene.background;
     }
     
-    color reflection(int i, color accumulator, RayHit hit, Ray ray){      
-      if(hit.material.properties.reflectiveness == 0){
+    color calculateReflections(Scene scene, RayHit h, Ray r, color a ,int i){
+      
+      
+      RayHit hit = h;
+      Ray ray = r;
+      color accumulator = a;
+      
+      if(i < scene.reflections){
+        
+        color surfaceCol = scene.lighting.getColor(hit, scene, ray.origin);
+        
+        /*
+          Non reflective surface, add surface color to accumulator and then break out of loop
+        */
+        if(hit.material.properties.reflectiveness == 0){
           
-          return scene.lighting.getColor(hit, scene, ray.origin);
+          accumulator = addColors(accumulator, surfaceCol);
           
-       }else if(hit.material.properties.reflectiveness == 1){
+          return accumulator;
           
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, PVector.mult(ray.origin, -1))).sub(PVector.mult(ray.origin, -1)).normalize();
+        /*
+          Perfect reflective surface, calculate reflection vector and then get reflection color 
+          add that color to the accumulator
+        */
+        }else if(hit.material.properties.reflectiveness == 1){
           
-          PVector impact = new PVector(hit.normal.x + EPS, hit.normal.y + EPS);
+          //calculate reflection vector
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
           
-          Ray reflection = new Ray(impact, Rm);
-          ArrayList<RayHit> reflectionHits = scene.root.intersect(reflection);
+          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
           
-          if(reflectionHits.size() > 0){
-            color R = scene.lighting.getColor(reflectionHits.get(0), scene, Rm);
+          //set ray to new shit
+          ray = new Ray(impact, Rm);
           
-            return R;
+          //calculate new hits
+          ArrayList<RayHit> hits = scene.root.intersect(ray);
+          
+          //set new hit
+          hit = hits.get(0);
+          
+          /*
+            check if there are more hits if so reset hit for next loop
+          */
+          if(hits.size() > 0 && (i + 1) < scene.reflections){
+            
+            //get reflection color
+            color reflectionCol = calculateReflections(scene, hit, ray, i++, accumulator); // calculate reflection color
+            
+            accumulator = addColors(accumulator, reflectionCol);
+            return reflectionCol;
+          
+          /*
+            if no more hits but reflection max hasn't been hit add background color to accumulator and break
+          */
+          }else if(hits.size() == 0 && (i + 1) < scene.reflections){
+            
+            accumulator = addColors(accumulator, scene.background);
+            return accumulator;
+            
           }else{
-            return scene.background;
-          }    
+            
+            //do nothing
+            
+          }
+          
+        /*
+          Non perfect reflective surface, calculate relfection vector and reflection color, add the 
+          lerp between surfaceCol and reflection color with some factor for internsity to the accumulator
+        */
         }else{
-          //shit fuck bitch
-          //lerp between the colors
+          
+          //calculate reflection vector
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
+          
+          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
+          
+          //set ray to new shit
+          ray = new Ray(impact, Rm);
+          
+          //calculate new hits
+          ArrayList<RayHit> hits = scene.root.intersect(ray);
+          
+          //set new hit
+          hit = hits.get(0);
+          
+          /*
+            check if there are more hits if so reset hit for next loop
+          */
+          if(hits.size() > 0 && (i + 1) < scene.reflections){
+            
+            //get reflection color
+            color reflectionCol = calculateReflections(scene, hit, ray, i++, accumulator); // calculate reflection color
+            accumulator = addColors(accumulator, lerpColor(reflectionCol, surfaceCol, hit.material.properties.reflectiveness)); // wrong hit property we need to old one not the new one
+            
+            return accumulator;
+          
+          /*
+            if no more hits but reflection max hasn't been hit add background color to accumulator and break
+          */
+          }else if(hits.size() == 0 && (i + 1) < scene.reflections){
+            
+            accumulator = addColors(accumulator, lerpColor(surfaceCol, scene.background, hit.material.properties.reflectiveness)); // wrong hit property we need to old one not the new one
+            
+            return accumulator;
+            
+          }else{
+            
+            //do nothing
+            
+          }
+          
         }
         
-        return accumulator;
+      }
+      
+      return accumulator;//return that bitch
+    
     }
 }
