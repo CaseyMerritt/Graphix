@@ -1,5 +1,5 @@
-String input =  "data/tests/milestone1/test1.json";
-String output = "data/tests/milestone1/test1.png";
+String input =  "data/tests/milestone3/test5.json";
+String output = "data/tests/milestone3/test5.png";
 int repeat = 0;
 
 int iteration = 0;
@@ -155,7 +155,7 @@ class RayTracer
         RayHit hit = hits.get(0);
         
         /*
-          only calculate relfections if scene calls for it
+          Only calculate relfections if scene calls for it
         */
         if (scene.reflections > 0){
           
@@ -164,22 +164,20 @@ class RayTracer
           col = calculateReflections(scene, hit, ray, col, 0);
           return col;
           
-          /*
-            Only use lighting model if no reflections are set
-          */
+        /*
+          Only use lighting model if no reflections are set
+        */
         }else{
           
           return scene.lighting.getColor(hit, scene, ray.origin);
           
         }
-        
       }
       
       return this.scene.background;
     }
     
     color calculateReflections(Scene scene, RayHit h, Ray r, color a ,int i){
-      
       
       RayHit hit = h;
       Ray ray = r;
@@ -190,12 +188,11 @@ class RayTracer
         color surfaceCol = scene.lighting.getColor(hit, scene, ray.origin);
         
         /*
-          Non reflective surface, add surface color to accumulator and then break out of loop
+          Non reflective surface, add surface color to accumulator and then return accumulator
         */
         if(hit.material.properties.reflectiveness == 0){
           
           accumulator = addColors(accumulator, surfaceCol);
-          
           return accumulator;
           
         /*
@@ -207,93 +204,85 @@ class RayTracer
           //calculate reflection vector
           PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
           
+          //get impact location
           PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
           
-          //set ray to new shit
+          //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
           
           //calculate new hits
           ArrayList<RayHit> hits = scene.root.intersect(ray);
           
-          //set new hit
-          hit = hits.get(0);
-          
           /*
-            check if there are more hits if so reset hit for next loop
+            check if there are hits, if so calculate the reflection color
           */
-          if(hits.size() > 0 && (i + 1) < scene.reflections){
+          if(hits.size() > 0){
+            //set new hit
+            hit = hits.get(0);
             
             //get reflection color
-            color reflectionCol = calculateReflections(scene, hit, ray, i++, accumulator); // calculate reflection color
+            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i++); // calculate reflection color
             
             accumulator = addColors(accumulator, reflectionCol);
             return reflectionCol;
           
           /*
-            if no more hits but reflection max hasn't been hit add background color to accumulator and break
+            if no more hits but reflection max hasn't been hit add background color to accumulator and return accumulator
+            i.e: reflected off surface into the sky
           */
-          }else if(hits.size() == 0 && (i + 1) < scene.reflections){
+          }else if(hits.size() == 0){
             
             accumulator = addColors(accumulator, scene.background);
             return accumulator;
-            
-          }else{
-            
-            //do nothing
             
           }
           
         /*
           Non perfect reflective surface, calculate relfection vector and reflection color, add the 
-          lerp between surfaceCol and reflection color with some factor for internsity to the accumulator
+          lerp between surface color and reflection color (with some factor for internsity) to the accumulator
         */
         }else{
           
           //calculate reflection vector
           PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
           
+          //get impact location
           PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
           
-          //set ray to new shit
+          //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
           
           //calculate new hits
           ArrayList<RayHit> hits = scene.root.intersect(ray);
           
-          //set new hit
-          hit = hits.get(0);
+          //save old hit reflectiveness for later calculation
+          float reflectiveness = hit.material.properties.reflectiveness;
           
           /*
-            check if there are more hits if so reset hit for next loop
+            check if there are hits, if so calculate the reflection color
           */
-          if(hits.size() > 0 && (i + 1) < scene.reflections){
+          if(hits.size() > 0){
+            //set new hit
+            hit = hits.get(0);
             
             //get reflection color
-            color reflectionCol = calculateReflections(scene, hit, ray, i++, accumulator); // calculate reflection color
-            accumulator = addColors(accumulator, lerpColor(reflectionCol, surfaceCol, hit.material.properties.reflectiveness)); // wrong hit property we need to old one not the new one
-            
+            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i++); // calculate reflection color
+            accumulator = addColors(accumulator, lerpColor(reflectionCol, surfaceCol, reflectiveness));
             return accumulator;
           
           /*
-            if no more hits but reflection max hasn't been hit add background color to accumulator and break
+            if there are no more hits but reflection max hasn't been hit add the lerp between background color and surface col to accumulator 
+            and then return accumulator
           */
-          }else if(hits.size() == 0 && (i + 1) < scene.reflections){
+          }else if(hits.size() == 0){
             
-            accumulator = addColors(accumulator, lerpColor(surfaceCol, scene.background, hit.material.properties.reflectiveness)); // wrong hit property we need to old one not the new one
-            
+            accumulator = addColors(accumulator, lerpColor(surfaceCol, scene.background, hit.material.properties.reflectiveness)); 
             return accumulator;
             
-          }else{
-            
-            //do nothing
-            
           }
-          
         }
-        
       }
       
       return accumulator;//return that bitch
-    
     }
 }

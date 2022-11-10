@@ -21,5 +21,5 @@
    "background": {"gray": 128},
    "fov": 90,
    "reflections": 0,
-   "lighting": {"type": "basic", "lights": [{"position": {"x": -3, "y": -2, "z": -5}, "color": {"gray": 128}}]}
+   "lighting": {"type": "phong", "lights": [{"position": {"x": -3, "y": -2, "z": -5}, "color": {"gray": 128}}]}
 }
