@@ -82,7 +82,7 @@ class PhongLightingModel extends LightingModel
         PVector Rm = PVector.mult(hit.normal, 2).mult(hit.normal.dot(fromlight)).sub(fromlight).normalize();
         
         //get impact location
-        PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
+        PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
         
         //shoot ray to check for object blocking light
         Ray shadowCast = new Ray(impact, tolight);

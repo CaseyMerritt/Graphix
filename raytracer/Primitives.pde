@@ -40,8 +40,8 @@ class Sphere implements SceneObject
           rh2.normal = PVector.sub(rh2.location, center).normalize();
           
           //calulate UV coords, supposed to be normalized idk tho
-          rh2.u = 0.5 + (atan2(rh2.normal.x, rh2.normal.y) / (2 * PI));
-          rh2.v = 0.5 - (asin(rh2.normal.z) / PI);
+          rh2.u = 0.5 - (atan2(rh2.normal.x, rh2.normal.y) / (2 * PI));
+          rh2.v = 0.5 + (asin(rh2.normal.z) / PI);
           
           rh2.material = material;
           rh1.material = material;
@@ -131,7 +131,7 @@ class Plane implements SceneObject
           PVector rvec = new PVector(0,0,1).cross(rh1.normal).normalize();
           PVector uvec = rh1.normal.cross(rvec).normalize();
           
-          PVector impact = new PVector(0,0,0);// change this to the actual impact
+          PVector impact = rh1.location;
           PVector d = PVector.sub(impact, center);
           
           float x = d.dot(rvec);

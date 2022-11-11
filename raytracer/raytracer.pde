@@ -1,5 +1,5 @@
-String input =  "data/tests/milestone4/test3.json";
-String output = "data/tests/milestone4/test3.png";
+String input =  "data/tests/milestone3/test10.json";
+String output = "data/tests/milestone3/test10.png";
 int repeat = 0;
 
 int iteration = 0;
@@ -205,7 +205,7 @@ class RayTracer
           PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
           
           //get impact location
-          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
+          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
           
           //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
@@ -247,7 +247,7 @@ class RayTracer
           PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
           
           //get impact location
-          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
+          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
           
           //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
