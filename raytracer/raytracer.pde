@@ -1,5 +1,5 @@
-String input =  "data/tests/milestone3/test5.json";
-String output = "data/tests/milestone3/test5.png";
+String input =  "data/tests/milestone4/test3.json";
+String output = "data/tests/milestone4/test3.png";
 int repeat = 0;
 
 int iteration = 0;
@@ -202,7 +202,7 @@ class RayTracer
         }else if(hit.material.properties.reflectiveness == 1){
           
           //calculate reflection vector
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
           
           //get impact location
           PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);
@@ -244,7 +244,7 @@ class RayTracer
         }else{
           
           //calculate reflection vector
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.origin)).sub(ray.origin).normalize();
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
           
           //get impact location
           PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS);

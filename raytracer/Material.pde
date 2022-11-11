@@ -48,7 +48,7 @@ class TexturedMaterial extends Material
     color getColor(float u, float v)
     {
       int x = clamp(int(this.texture.width * u), 0, this.texture.width-1);
-      int y = clamp(int(this.texture.height*v), 0, this.texture.height-1);
+      int y = clamp(int(this.texture.height * v), 0, this.texture.height-1);
       
       return this.texture.get(x,y);
     }

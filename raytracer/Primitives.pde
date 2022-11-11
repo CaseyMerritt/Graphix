@@ -29,12 +29,24 @@ class Sphere implements SceneObject
           rh1.t = (float) impactPoint1;
           rh1.location = PVector.add(r.direction, r.origin).mult(rh1.t);
           rh1.normal = PVector.sub(rh1.location, center).normalize();
+          
+          //calulate UV coords, supposed to be normalized idk tho
+          rh1.u = 0.5 + (atan2(rh1.normal.x, rh1.normal.y) / (2 * PI));
+          rh1.v = 0.5 - (asin(rh1.normal.z) / PI);
+          
           RayHit rh2 = new RayHit();
           rh2.t = (float) impactPoint2;
           rh2.location = PVector.add(r.direction, r.origin).mult(rh2.t);
           rh2.normal = PVector.sub(rh2.location, center).normalize();
+          
+          //calulate UV coords, supposed to be normalized idk tho
+          rh2.u = 0.5 + (atan2(rh2.normal.x, rh2.normal.y) / (2 * PI));
+          rh2.v = 0.5 - (asin(rh2.normal.z) / PI);
+          
           rh2.material = material;
           rh1.material = material;
+          
+          
           
           if(rh1.t > 0 && rh2.t > 0){
              rh2.entry = true;
@@ -115,6 +127,23 @@ class Plane implements SceneObject
           rh1.t = t;
           rh1.location = PVector.mult(r.direction,rh1.t).add(r.origin);
           rh1.normal = normal;
+          
+          PVector rvec = new PVector(0,0,1).cross(rh1.normal).normalize();
+          PVector uvec = rh1.normal.cross(rvec).normalize();
+          
+          PVector impact = new PVector(0,0,0);// change this to the actual impact
+          PVector d = PVector.sub(impact, center);
+          
+          float x = d.dot(rvec);
+          float y = d.dot(uvec);
+          
+          x = x / scale;
+          y = y / scale;
+          
+          rh1.u = x - floor(x);
+          rh1.v = (-y) - floor(-y);
+          
+          
           rh1.material = material;
           rh1.entry = true;
           result.add(rh1);
