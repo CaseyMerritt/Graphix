@@ -1,5 +1,5 @@
-String input =  "data/tests/milestone3/test10.json";
-String output = "data/tests/milestone3/test10.png";
+String input =  "data/tests/milestone4/test15.json";
+String output = "data/tests/milestone4/test15.png";
 int repeat = 0;
 
 int iteration = 0;
@@ -221,10 +221,11 @@ class RayTracer
             hit = hits.get(0);
             
             //get reflection color
-            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i++); // calculate reflection color
+            i++;
+            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i); // calculate reflection color
             
             accumulator = addColors(accumulator, reflectionCol);
-            return reflectionCol;
+            return accumulator;
           
           /*
             if no more hits but reflection max hasn't been hit add background color to accumulator and return accumulator
@@ -266,7 +267,8 @@ class RayTracer
             hit = hits.get(0);
             
             //get reflection color
-            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i++); // calculate reflection color
+            i++;
+            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i); // calculate reflection color
             accumulator = addColors(accumulator, lerpColor(reflectionCol, surfaceCol, reflectiveness));
             return accumulator;
           

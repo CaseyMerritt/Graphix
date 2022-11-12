@@ -30,69 +30,29 @@ class Sphere implements SceneObject
           rh1.location = PVector.add(r.direction, r.origin).mult(rh1.t);
           rh1.normal = PVector.sub(rh1.location, center).normalize();
           
-          //calulate UV coords, supposed to be normalized idk tho
-          rh1.u = 0.5 + (atan2(rh1.normal.x, rh1.normal.y) / (2 * PI));
-          rh1.v = 0.5 - (asin(rh1.normal.z) / PI);
-          
           RayHit rh2 = new RayHit();
           rh2.t = (float) impactPoint2;
           rh2.location = PVector.add(r.direction, r.origin).mult(rh2.t);
-          rh2.normal = PVector.sub(rh2.location, center).normalize();
-          
-          //calulate UV coords, supposed to be normalized idk tho
-          rh2.u = 0.5 - (atan2(rh2.normal.x, rh2.normal.y) / (2 * PI));
-          rh2.v = 0.5 + (asin(rh2.normal.z) / PI);
+          rh2.normal = PVector.sub(rh2.location, center).normalize(); 
           
           rh2.material = material;
           rh1.material = material;
           
+          //calulate UV coords, supposed to be normalized idk tho
+          rh2.u = 0.5 + (atan2(rh2.normal.y, rh2.normal.x) / (2 * PI));
+          rh2.v = 0.5 - (asin(rh2.normal.z) / PI);
           
+          //calulate UV coords, supposed to be normalized idk tho
+          rh1.u = 0.5 + (atan2(rh1.normal.x, rh1.normal.y) / (2 * PI));
+          rh1.v = 0.5 - (asin(rh1.normal.z) / PI);
           
           if(rh1.t > 0 && rh2.t > 0){
-             rh2.entry = true;
-             rh1.entry = false;
-             result.add(rh2);
-             result.add(rh1);
-            
+            rh2.entry = true;
+            rh1.entry = false;
+            result.add(rh2);
+            result.add(rh1);
           }
         }
-          
-        
-        //System.out.print(p + " ");
-        // TODO: Step 2: implement ray-sphere intersections
-        return result;
-    }
-}
-
-class Cylinder implements SceneObject
-{
-    float radius;
-    float height;
-    Material material;
-    float scale;
-    
-    Cylinder(float radius, Material mat, float scale)
-    {
-       this.radius = radius;
-       this.height = -1;
-       this.material = mat;
-       this.scale = scale;
-       
-       // remove this line when you implement cylinders
-       throw new NotImplementedException("Cylinders not implemented yet");
-    }
-    
-    Cylinder(float radius, float height, Material mat, float scale)
-    {
-       this.radius = radius;
-       this.height = height;
-       this.material = mat;
-       this.scale = scale;
-    }
-    
-    ArrayList<RayHit> intersect(Ray r)
-    {
-        ArrayList<RayHit> result = new ArrayList<RayHit>();
         return result;
     }
 }
@@ -152,6 +112,39 @@ class Plane implements SceneObject
     }
 }
 
+class Cylinder implements SceneObject
+{
+    float radius;
+    float height;
+    Material material;
+    float scale;
+    
+    Cylinder(float radius, Material mat, float scale)
+    {
+       this.radius = radius;
+       this.height = -1;
+       this.material = mat;
+       this.scale = scale;
+       
+       // remove this line when you implement cylinders
+       throw new NotImplementedException("Cylinders not implemented yet");
+    }
+    
+    Cylinder(float radius, float height, Material mat, float scale)
+    {
+       this.radius = radius;
+       this.height = height;
+       this.material = mat;
+       this.scale = scale;
+    }
+    
+    ArrayList<RayHit> intersect(Ray r)
+    {
+        ArrayList<RayHit> result = new ArrayList<RayHit>();
+        return result;
+    }
+}
+
 class Triangle implements SceneObject
 {
     PVector v1;
@@ -195,7 +188,12 @@ class Triangle implements SceneObject
             rh1.material = material;
             rh1.entry = true;
             result.add(rh1);
-            //print("u: " + uv[0] + " v: " + uv[1] + " | ");
+            
+            float[] uv = computeUV(v2,v3,v1,point);
+            float c = 1 - (uv[0] + uv[1]);
+            rh1.u = (tex1.x * uv[0]) + (tex2.x * uv[1]) + (tex3.x * c);
+            rh1.v = (tex1.y * uv[0]) + (tex2.y * uv[1]) + (tex3.y * c);
+            
           } else {
             //print(u + " " + v + "***");
           }
