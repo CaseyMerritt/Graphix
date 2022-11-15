@@ -1,5 +1,5 @@
-String input =  "data/tests/milestone4/test15.json";
-String output = "data/tests/milestone4/test15.png";
+String input =  "data/tests/milestone3/test12.json";
+String output = "data/tests/milestone3/test12.png";
 int repeat = 0;
 
 int iteration = 0;
@@ -161,7 +161,7 @@ class RayTracer
           
           //send first hit and ray used to get that hit to the calculator
           color col = color(0,0,0);
-          col = calculateReflections(scene, hit, ray, col, 0);
+          col = calculateReflections(scene, hit, ray, ray.origin, col, 0);
           return col;
           
         /*
@@ -177,7 +177,7 @@ class RayTracer
       return this.scene.background;
     }
     
-    color calculateReflections(Scene scene, RayHit h, Ray r, color a ,int i){
+    color calculateReflections(Scene scene, RayHit h, Ray r, PVector viewer, color a ,int i){
       
       RayHit hit = h;
       Ray ray = r;
@@ -192,8 +192,7 @@ class RayTracer
         */
         if(hit.material.properties.reflectiveness == 0){
           
-          accumulator = addColors(accumulator, surfaceCol);
-          return accumulator;
+          return surfaceCol;
           
         /*
           Perfect reflective surface, calculate reflection vector and then get reflection color 
@@ -202,10 +201,12 @@ class RayTracer
         }else if(hit.material.properties.reflectiveness == 1){
           
           //calculate reflection vector
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
+          PVector V = PVector.sub(ray.direction, hit.location).normalize();//
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, V)).add(ray.direction).normalize();
           
           //get impact location
-          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
+          PVector impact = hit.location;
+          impact = PVector.add(impact, PVector.mult(Rm, EPS));
           
           //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
@@ -222,19 +223,17 @@ class RayTracer
             
             //get reflection color
             i++;
-            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i); // calculate reflection color
+            color reflectionCol = calculateReflections(scene, hit, ray, viewer, accumulator, i); // calculate reflection color
             
-            accumulator = addColors(accumulator, reflectionCol);
-            return accumulator;
+            return reflectionCol;
           
           /*
-            if no more hits but reflection max hasn't been hit add background color to accumulator and return accumulator
+            if no more hits but reflection max hasn't been hit add background color
             i.e: reflected off surface into the sky
           */
           }else if(hits.size() == 0){
             
-            accumulator = addColors(accumulator, scene.background);
-            return accumulator;
+            return scene.background;
             
           }
           
@@ -245,10 +244,13 @@ class RayTracer
         }else{
           
           //calculate reflection vector
-          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, ray.direction)).sub(ray.direction).normalize();
+          PVector V = PVector.sub(ray.direction, hit.location).normalize();//
+          PVector Rm = PVector.mult(hit.normal, 2).mult(PVector.dot(hit.normal, V)).add(ray.direction).normalize();
           
           //get impact location
-          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
+          //PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
+          PVector impact = hit.location;
+          impact = PVector.add(impact, PVector.mult(Rm, EPS));
           
           //create new ray with impact location and reflection vector
           ray = new Ray(impact, Rm);
@@ -268,9 +270,9 @@ class RayTracer
             
             //get reflection color
             i++;
-            color reflectionCol = calculateReflections(scene, hit, ray, accumulator, i); // calculate reflection color
-            accumulator = addColors(accumulator, lerpColor(reflectionCol, surfaceCol, reflectiveness));
-            return accumulator;
+            color reflectionCol = calculateReflections(scene, hit, ray, viewer, accumulator, i); // calculate reflection color
+
+            return lerpColor(surfaceCol, reflectionCol, reflectiveness);
           
           /*
             if there are no more hits but reflection max hasn't been hit add the lerp between background color and surface col to accumulator 
@@ -278,13 +280,12 @@ class RayTracer
           */
           }else if(hits.size() == 0){
             
-            accumulator = addColors(accumulator, lerpColor(surfaceCol, scene.background, hit.material.properties.reflectiveness)); 
-            return accumulator;
+            return lerpColor(surfaceCol, scene.background, reflectiveness);
             
           }
         }
       }
       
-      return accumulator;//return that bitch
+      return scene.background;
     }
 }
