@@ -196,7 +196,7 @@ class RayTracer
           
         /*
           Perfect reflective surface, calculate reflection vector and then get reflection color 
-          add that color to the accumulator
+          add that color
         */
         }else if(hit.material.properties.reflectiveness == 1){
           
@@ -239,7 +239,7 @@ class RayTracer
           
         /*
           Non perfect reflective surface, calculate relfection vector and reflection color, add the 
-          lerp between surface color and reflection color (with some factor for internsity) to the accumulator
+          lerp between surface color and reflection color (with some factor for internsity)
         */
         }else{
           
@@ -275,8 +275,8 @@ class RayTracer
             return lerpColor(surfaceCol, reflectionCol, reflectiveness);
           
           /*
-            if there are no more hits but reflection max hasn't been hit add the lerp between background color and surface col to accumulator 
-            and then return accumulator
+            if there are no more hits but reflection max hasn't been hit add the lerp between background color and surface col
+            and then return
           */
           }else if(hits.size() == 0){
             
