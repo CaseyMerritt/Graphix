@@ -27,12 +27,12 @@ class Sphere implements SceneObject
           
           RayHit rh1 = new RayHit();
           rh1.t = (float) impactPoint1;
-          rh1.location = PVector.add(r.direction, r.origin).mult(rh1.t);
+          rh1.location = PVector.add(r.origin, (PVector.mult(r.direction, rh1.t)));
           rh1.normal = PVector.sub(rh1.location, center).normalize();
           
           RayHit rh2 = new RayHit();
           rh2.t = (float) impactPoint2;
-          rh2.location = PVector.add(r.direction, r.origin).mult(rh2.t);
+          rh2.location = PVector.add(r.origin, (PVector.mult(r.direction, rh2.t)));
           rh2.normal = PVector.sub(rh2.location, center).normalize(); 
           
           rh2.material = material;

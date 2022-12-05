@@ -81,17 +81,30 @@ class PhongLightingModel extends LightingModel
         //calculate Rm vector
         PVector Rm = PVector.mult(hit.normal, 2).mult(hit.normal.dot(fromlight)).sub(fromlight).normalize();
         
-        //get impact location
-        PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
-        
-        //shoot ray to check for object blocking light
-        Ray shadowCast = new Ray(impact, tolight);
-        ArrayList<RayHit> hits = sc.root.intersect(shadowCast);
-        
-        /*
+        //only calculate shadows if settings is enabled
+        if(withshadow){
+          //get impact location
+          PVector impact = new PVector(hit.location.x + EPS, hit.location.y + EPS, hit.location.z + EPS);
+          
+          //shoot ray to check for object blocking light
+          Ray shadowCast = new Ray(impact, tolight);
+          ArrayList<RayHit> hits = sc.root.intersect(shadowCast);
+          
+           /*
           if no objects are blocking the light we calculate the color otherwise we ignore the light
-        */
-        if(hits.size() == 0){
+          */
+          if(hits.size() == 0){
+            //color id = lights.get(i).shine(hitcolor);
+            color id = lights.get(i).diffuse;
+            id = multColor(id, hit.material.properties.kd * hit.normal.dot(tolight));
+            diffuse = addColors(diffuse, id);
+      
+            //color is = lights.get(i).spec(hitcolor);
+            color is = lights.get(i).specular;
+            is = multColor(is, hit.material.properties.ks * pow(Rm.dot(toCamera), hit.material.properties.alpha));
+            specular = addColors(specular, is); 
+          }
+        }else{
           //color id = lights.get(i).shine(hitcolor);
           color id = lights.get(i).diffuse;
           id = multColor(id, hit.material.properties.kd * hit.normal.dot(tolight));
@@ -100,7 +113,7 @@ class PhongLightingModel extends LightingModel
           //color is = lights.get(i).spec(hitcolor);
           color is = lights.get(i).specular;
           is = multColor(is, hit.material.properties.ks * pow(Rm.dot(toCamera), hit.material.properties.alpha));
-          specular = addColors(specular, is); 
+          specular = addColors(specular, is);
         }
       }
       
