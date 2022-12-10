@@ -38,7 +38,7 @@ class Union implements SceneObject
      
      ArrayList<RayHit> toReturn = new ArrayList<RayHit>(); 
      int count = 0;
-     for(int i = 0; i<hits.size();i++ )
+     for(int i = 0; i < hits.size(); i++)
        if(count == 0 && hits.get(i).entry){
          toReturn.add(hits.get(i));
          count++;
@@ -68,33 +68,35 @@ class Intersection implements SceneObject
   {
      
      ArrayList<RayHit> hits = new ArrayList<RayHit>();
+     int size = 0;
      
-     // Reminder: this is *not* a true union
-     // For a true union, you need to ensure that enter-
-     // and exit-hits alternate
      for (SceneObject sc : elements)
      {
+       size++;
        hits.addAll(sc.intersect(r));
      }
      hits.sort(new HitCompare());
      
      ArrayList<RayHit> toReturn = new ArrayList<RayHit>(); 
-     int count = 0;
-     for(int i = 0; i<hits.size();i++ )
-       if(count == 1 && hits.get(i).entry){
+     
+     int count = 0; //initialize to how many objects we started out inside of and boom done
+     
+     for(int i = 0; i < hits.size();i++ ){
+       if(count == (size - 1) && hits.get(i).entry){
          toReturn.add(hits.get(i));
          count++;
-       } else if (count == 0 && !hits.get(i).entry){
+       }else if(count == 0 && !hits.get(i).entry){
          toReturn.add(hits.get(i));
          count--;
-       } else if(hits.get(i).entry){
+       }else if(hits.get(i).entry){
          count++;
-       } else if(!hits.get(i).entry){
+       }else if(!hits.get(i).entry){
          count--;
-       }   
+       }
+     }
+       
      return toReturn;
   }
-  
 }
 
 class Difference implements SceneObject
@@ -112,17 +114,85 @@ class Difference implements SceneObject
   
   ArrayList<RayHit> intersect(Ray r)
   {
-     ArrayList<RayHit> hits = new ArrayList<RayHit>();
+     //ArrayList<RayHit> hits = new ArrayList<RayHit>();
+     ArrayList<RHH> hits = new ArrayList<RHH>();
      ArrayList<RayHit> hitsa = new ArrayList<RayHit>();
      ArrayList<RayHit> hitsb = new ArrayList<RayHit>();
      
      hitsa.addAll(a.intersect(r));
      hitsb.addAll(b.intersect(r));
-     hits.addAll(hitsa);
-     hits.addAll(hitsb);
-     hits.sort(new HitCompare());
+     
+     for(RayHit h: hitsa){
+       hits.add(new RHH(h, true));
+     }
+     
+     for(RayHit h: hitsb){
+       hits.add(new RHH(h, false));
+     }
+     
+     //hits.sort(new HitCompare());
+     //hits.sort(new RHHComparer());//same as what ever the hitcompare is but instead you do rhh.hit.t
+     ArrayList<RHH> SortedHits = new ArrayList<RHH>();
+     int smallest = 0;
+     
+     /*
+     for(int i = 0; i < hits.size(); i++){
+       for(int j = 0; j < hits.size(); j++){
+         if(j == 0){
+           smallest = 0;
+         }
+         if(hits.get(j).hit.t < hits.get(smallest).hit.t){
+           smallest = j;
+         }
+       }
+       
+       SortedHits.add(hits.get(smallest));
+       hits.remove(smallest);
+     }
+     */
      
      ArrayList<RayHit> toReturn = new ArrayList<RayHit>(); 
+     
+     boolean ina, inb;
+     if(hitsa.size() == 0){
+       return toReturn;
+     }else if(hitsb.size() == 0){
+       return toReturn;
+     }
+     ina = !hitsa.get(0).entry;
+     inb = !hitsb.get(0).entry;
+     
+     for(RHH rh : SortedHits){
+       boolean orig_entry = rh.hit.entry;
+       
+       if(ina && !inb){
+         if(rh.hit.entry){
+           rh.hit.entry = false;
+           rh.hit.normal = PVector.mult(rh.hit.normal, -1);
+           toReturn.add(rh.hit);
+         }else if(!rh.hit.entry){
+           toReturn.add(rh.hit);
+         }
+       }
+       
+       if(rh.isa){
+         ina = orig_entry;
+       }else if(!rh.isa){
+         inb = orig_entry;
+       }
+       
+       if(ina && !inb){
+         if(rh.hit.entry){
+           toReturn.add(rh.hit);
+         }else if(!rh.hit.entry){
+           rh.hit.entry = true;
+           rh.hit.normal = PVector.mult(rh.hit.normal, -1);
+           toReturn.add(rh.hit);
+         }
+       }
+     }
+     
+     /*
      //We only have b return nothing
      if(hitsa.size() == 0)
        return toReturn;
@@ -157,8 +227,7 @@ class Difference implements SceneObject
         
        }
      }
-     
-     
+     */
       
      return toReturn;
   }
